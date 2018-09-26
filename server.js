@@ -36,24 +36,16 @@ app.get('/api/users', (req, res) => {
                 function(err, rowCount, rows) {
                     if(err) throw err
                     
-                    //res.send(JSON.stringify(rows))
-                    console.log(JSON.stringify(rows))
-                    console.log(rows)
-                    //for (let index = 0; index < rows.length; index++) {
                     for (let index in rows) {
-                        //test[index] = rows[index]
-
-
-
-                        console.log("loop: " + index + " " + rows[index].value)
+                        
+                        console.log("loop: " + index + " " + rows[index][1].value + ", " + rows[index][0].value)//JSON.stringify(rows[index]))
                         users[index] = {
                             //id:         rows[index].id,
-                            firstName:  rows[index].firstName,
-                            lastName:   rows[index].lastName
+                            firstName:  rows[index][0].value,
+                            lastName:   rows[index][1].value
                             //sex:        rows[index].sex,
                             //age:        rows[index].age
                         };
-                        console.log(users[index].firstName)
                     }
                     res.json(users);
                 }
