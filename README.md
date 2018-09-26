@@ -1,5 +1,5 @@
 # reactDB
-React Frontend - Express and MySQL backend
+React Frontend - Express and Azure backend
 
 > npm init
 
