@@ -32,27 +32,30 @@ app.get('/api/users', (req, res) => {
         {
             console.log("Connected to Azure...")
             var request = new Request(
-                "SELECT * FROM users",
+                "SELECT firstName, lastName FROM users Where firstName is not null AND lastName is not null",
                 function(err, rowCount, rows) {
                     if(err) throw err
-
-
-                    //console.log(rows)
-                    for (let index = 0; index < rows.length; index++) {
+                    
+                    //res.send(JSON.stringify(rows))
+                    console.log(JSON.stringify(rows))
+                    console.log(rows)
+                    //for (let index = 0; index < rows.length; index++) {
+                    for (let index in rows) {
                         //test[index] = rows[index]
 
+
+
+                        console.log("loop: " + index + " " + rows[index].value)
                         users[index] = {
-                            id:         rows[index].id,
+                            //id:         rows[index].id,
                             firstName:  rows[index].firstName,
-                            lastName:   rows[index].lastName,
-                            sex:        rows[index].sex,
-                            age:        rows[index].age
+                            lastName:   rows[index].lastName
+                            //sex:        rows[index].sex,
+                            //age:        rows[index].age
                         };
                         console.log(users[index].firstName)
                     }
-
                     res.json(users);
-
                 }
             );
             connection.execSql(request);
