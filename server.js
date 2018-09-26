@@ -4,20 +4,11 @@ var Connection = tedious.Connection;
 var Request = tedious.Request;
 
 const app = express();
-const mysql = require('mysql');
+
 const mssql = require('mssql');
+
 var users = [];
-var xUsers = [];
-var dbstatus = "";
 var test = [];
-
-const db = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password : 'password',
-    database : 'user'
-});
-
 
 var config = {
     userName: 'eladage',
@@ -31,37 +22,32 @@ var config = {
 }
 
 
-app.get('/api/xUsers', (req, res) => {
+app.get('/api/users', (req, res) => {
     var connection = new Connection(config);
     connection.on('connect', function(err) {
         if(err) {
             callback(err);
         }
-        else 
+        else
         {
             console.log("Connected to Azure...")
             var request = new Request(
-                "SELECT * FROM users",
+                "SELECT firstName, lastName FROM users Where firstName is not null AND lastName is not null",
                 function(err, rowCount, rows) {
                     if(err) throw err
                     
-                    
-                    //console.log(rows)
-                    for (let index = 0; index < rows.length; index++) {
-                        test[index] = rows[index]
+                    for (let index in rows) {
                         
-                        xUsers[index] = {
-                            id:         rows[index].id, 
-                            firstName:  rows[index].firstName,
-                            lastName:   rows[index].lastName,
-                            sex:        rows[index].sex,
-                            age:        rows[index].age
+                        console.log("loop: " + index + " " + rows[index][1].value + ", " + rows[index][0].value)//JSON.stringify(rows[index]))
+                        users[index] = {
+                            //id:         rows[index].id,
+                            firstName:  rows[index][0].value,
+                            lastName:   rows[index][1].value
+                            //sex:        rows[index].sex,
+                            //age:        rows[index].age
                         };
-                        console.log(xUsers[index].firstName)
                     }
-
-                    res.json(xUsers);
-                    
+                    res.json(users);
                 }
             );
             connection.execSql(request);
@@ -70,43 +56,6 @@ app.get('/api/xUsers', (req, res) => {
 })
 
 console.log(test[0]);
-
-db.connect(function(err) {
-    if (err) throw err
-    console.log('You are now connected...')
-    dbstatus = "connected."
-    
-    app.get('/api/users', (req, res) => {
-        db.query('SELECT * FROM user', function(err, results) {
-            if (err) throw err
-            for (let index = 0; index < results.length; index++) {
-                users[index] = {
-    
-                    id:         results[index].id, 
-                    firstName:  results[index].firstName,
-                    lastName:   results[index].lastName,
-                    sex:        results[index].sex,
-                    age:        results[index].age
-                }
-                
-                //console.log(users[index].id)
-
-                // console.log(results[index].id)
-                // console.log(results[index].firstName)
-                // console.log(results[index].lastName)
-                // console.log(results[index].sex)
-                // console.log(results[index].age)
-                // console.log("\n")
-                
-            }
-
-            res.json(users);
-        
-        })
-
-    })
-})
-
 
 const port = 5000;
 
