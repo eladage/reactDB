@@ -10,7 +10,7 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">React DB</h1>
-          <h2>React + Express + MySQL</h2>
+          <h2>React + Express + Azure</h2>
         </header>
         <Users />
       </div>

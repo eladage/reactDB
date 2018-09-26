@@ -19,7 +19,7 @@ class Users extends Component {
   render() {
     return (
       <div>
-        <h3>Users from MySQL Database:</h3>
+        <h3>Users from Azure Database:</h3>
         <ul>
         {this.state.users.map(users => 
           <li key={users.id}>{users.firstName} {users.lastName}, {users.age}</li>
