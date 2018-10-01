@@ -5,8 +5,6 @@ var Request = tedious.Request;
 
 const app = express();
 
-const mssql = require('mssql');
-
 var users = [];
 var test = [];
 
