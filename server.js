@@ -24,19 +24,21 @@ app.get('/api/users', (req, res) => {
     var connection = new Connection(config);
     connection.on('connect', function(err) {
         if(err) {
-            callback(err);
+            throw err
         }
         else
         {
             console.log("Connected to Azure...")
             var request = new Request(
-                "SELECT firstName, lastName FROM users Where firstName is not null AND lastName is not null",
+                "SELECT firstName, lastName \
+                FROM users \
+                WHERE firstName is not null AND lastName is not null and isDeleted = 0",
                 function(err, rowCount, rows) {
                     if(err) throw err
-                    
+                    users = []
                     for (let index in rows) {
                         
-                        console.log("loop: " + index + " " + rows[index][1].value + ", " + rows[index][0].value)//JSON.stringify(rows[index]))
+                        console.log("loop " + index + ": " + rows[index][1].value + ", " + rows[index][0].value)//JSON.stringify(rows[index]))
                         users[index] = {
                             //id:         rows[index].id,
                             firstName:  rows[index][0].value,
@@ -52,8 +54,6 @@ app.get('/api/users', (req, res) => {
         }
     });
 })
-
-console.log(test[0]);
 
 const port = 5000;
 

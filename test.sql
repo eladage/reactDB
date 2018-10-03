@@ -1,2 +1,2 @@
-select * from users;
---where lastName is NOT NULL;
+select firstname, lastname, isDeleted from users
+where isDeleted = 0;
