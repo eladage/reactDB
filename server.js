@@ -46,8 +46,9 @@ app.get('/api/users', (req, res) => {
                     for (let index in rows) {
                         
                         //write users to console for debugging 
-                        console.log("loop " + index + ": " + rows[index][1].value + ", " + rows[index][0].value)//JSON.stringify(rows[index]))
-
+                        console.log("row " + index + ": " + rows[index][1].value + ", " + rows[index][0].value)
+                        
+                        
                         users[index] = {
 
                             firstName:  rows[index][0].value,
