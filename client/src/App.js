@@ -11,7 +11,7 @@ class App extends Component {
         <header className="App-header">
           <img src={jhawk} className="App-KU" alt="jhawk" />
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">React DB</h1>
+          <h1 className="App-title">ReactDB</h1>
           <h2>React + Express + Azure</h2>
         </header>
         <Users />
